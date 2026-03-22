@@ -8,8 +8,6 @@
 
 /* Begin PBXFileReference section */
 		5E14A3112F6F22D90076F169 /* Flowdoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowdoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E14A32A2F6F2A320076F169 /* Flowdoro.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Flowdoro.xcodeproj; sourceTree = "<group>"; };
-		5E1FFDBA2F703AF200624F7C /* Flowdoro.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Flowdoro.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -43,20 +41,6 @@
 			isa = PBXGroup;
 			children = (
 				5E14A3112F6F22D90076F169 /* Flowdoro.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		5E14A32B2F6F2A320076F169 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		5E1FFDC02F703AF200624F7C /* Products */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,7 +82,6 @@
 				TargetAttributes = {
 					5E14A3102F6F22D90076F169 = {
 						CreatedOnToolsVersion = 26.3;
-						LastSwiftMigration = 2630;
 					};
 				};
 			};
@@ -114,16 +97,6 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5E14A3122F6F22D90076F169 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 5E1FFDC02F703AF200624F7C /* Products */;
-					ProjectRef = 5E1FFDBA2F703AF200624F7C /* Flowdoro.xcodeproj */;
-				},
-				{
-					ProductGroup = 5E14A32B2F6F2A320076F169 /* Products */;
-					ProjectRef = 5E14A32A2F6F2A320076F169 /* Flowdoro.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				5E14A3102F6F22D90076F169 /* Flowdoro */,
@@ -275,7 +248,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -283,7 +255,6 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -297,8 +268,6 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -309,7 +278,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -317,7 +285,6 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -331,7 +298,6 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
