@@ -9,6 +9,7 @@ struct FloatingTimerView: View {
     @State private var rippleScale: CGFloat = 1.0
     @State private var rippleOpacity: Double = 0
     @State private var immediateIconName: String? = nil
+    @State private var arcOpacity: Double = 1.0
 
     private var backgroundColor: Color {
         if case .onBreak = timerVM.state {
@@ -102,11 +103,11 @@ struct FloatingTimerView: View {
                 let arcAnimation: Animation? = skipAnimating ? .easeIn(duration: 0.45) : .linear(duration: 1)
 
                 Circle()
-                    .stroke(Color.white.opacity(0.08), lineWidth: 2)
+                    .stroke(Color.white.opacity(0.08 * arcOpacity), lineWidth: 2)
                     .frame(width: 74, height: 74)
                 Circle()
                     .trim(from: 0, to: displayProgress)
-                    .stroke(Color.white.opacity(0.5), style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                    .stroke(Color.white.opacity(0.5 * arcOpacity), style: StrokeStyle(lineWidth: 2, lineCap: .round))
                     .frame(width: 74, height: 74)
                     .rotationEffect(.degrees(-90))
                     .animation(arcAnimation, value: displayProgress)
@@ -163,12 +164,22 @@ struct FloatingTimerView: View {
         let remaining = Double(timerVM.breakSecondsRemaining)
         animatedBreakProgress = total > 0 ? (total - remaining) / total : 0
         skipAnimating = true
-        withAnimation(.easeIn(duration: 0.45)) {
+
+        // Phase 1: fast-forward arc to full
+        withAnimation(.easeIn(duration: 0.4)) {
             animatedBreakProgress = 1.0
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        // Phase 2: fade arc out
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            withAnimation(.easeOut(duration: 0.25)) {
+                arcOpacity = 0
+            }
+        }
+        // Phase 3: state change — arc already invisible
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
             immediateIconName = nil
             skipAnimating = false
+            arcOpacity = 1.0
             if case .onBreak = timerVM.state {
                 timerVM.endBreak()
             }

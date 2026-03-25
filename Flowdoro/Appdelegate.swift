@@ -3,6 +3,44 @@ import SwiftUI
 import Observation
 import Combine
 
+// MARK: - Status bar timer view
+
+private func makeStatusImage(for time: String) -> NSImage {
+    let font = NSFont.monospacedDigitSystemFont(ofSize: 10, weight: .medium)
+    let attrs: [NSAttributedString.Key: Any] = [
+        .font: font,
+        .foregroundColor: NSColor.white
+    ]
+    let str = time as NSString
+    let textSize = str.size(withAttributes: attrs)
+
+    let hPad: CGFloat = 7
+    let vPad: CGFloat = 3
+    let cornerRadius: CGFloat = 6
+    let lineWidth: CGFloat = 1.0
+    let size = NSSize(width: ceil(textSize.width) + hPad * 2,
+                      height: ceil(textSize.height) + vPad * 2)
+
+    let image = NSImage(size: size, flipped: false) { rect in
+        // Border
+        let borderRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
+        let path = NSBezierPath(roundedRect: borderRect, xRadius: cornerRadius, yRadius: cornerRadius)
+        NSColor.white.setStroke()
+        path.lineWidth = lineWidth
+        path.stroke()
+
+        // Text centred
+        let textPoint = NSPoint(x: (rect.width - textSize.width) / 2,
+                                y: (rect.height - textSize.height) / 2)
+        str.draw(at: textPoint, withAttributes: attrs)
+        return true
+    }
+    image.isTemplate = false
+    return image
+}
+
+// MARK: - App delegate
+
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
     var timerVM = TimerViewModel()
@@ -59,7 +97,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private func setupStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         guard let button = statusItem?.button else { return }
-        button.title = timerVM.formattedTime
         button.action = #selector(statusItemClicked)
         button.target = self
         button.sendAction(on: [.leftMouseUp, .rightMouseUp])
@@ -76,12 +113,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         }
     }
 
-    // MARK: - Live title observation
+    // MARK: - Live image observation
 
     private func startObserving() {
         func observe() {
             withObservationTracking {
-                self.statusItem?.button?.title = self.timerVM.formattedTime
+                let image = makeStatusImage(for: self.timerVM.formattedTime)
+                self.statusItem?.button?.image = image
+                self.statusItem?.button?.title = ""
             } onChange: {
                 DispatchQueue.main.async { observe() }
             }
