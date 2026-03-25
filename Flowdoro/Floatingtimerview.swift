@@ -11,6 +11,7 @@ struct FloatingTimerView: View {
     @State private var immediateIconName: String? = nil
     @State private var arcOpacity: Double = 1.0
     @State private var showSettings = false
+    @State private var showLeaderboard = false
     @State private var customRatioText = ""
     @State private var ratioInputInvalid = false
     @State private var invalidShakeOffset: CGFloat = 0
@@ -47,6 +48,12 @@ struct FloatingTimerView: View {
                         insertion: .move(edge: .trailing).combined(with: .opacity),
                         removal: .move(edge: .trailing).combined(with: .opacity)
                     ))
+            } else if showLeaderboard {
+                leaderboardView
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing).combined(with: .opacity),
+                        removal: .move(edge: .trailing).combined(with: .opacity)
+                    ))
             } else {
                 VStack(spacing: 0) {
                     topBar
@@ -60,10 +67,10 @@ struct FloatingTimerView: View {
                     insertion: .move(edge: .leading).combined(with: .opacity),
                     removal: .move(edge: .leading).combined(with: .opacity)
                 ))
-
             }
         }
         .animation(.easeInOut(duration: 0.3), value: showSettings)
+        .animation(.easeInOut(duration: 0.3), value: showLeaderboard)
         .onHover { hovering in
             withAnimation(.easeInOut(duration: 0.15)) {
                 isHovering = hovering
@@ -94,6 +101,19 @@ struct FloatingTimerView: View {
             }) {
                 Image(systemName: "ellipsis")
                     .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(.white.opacity(0.5))
+                    .frame(width: 36, height: 36)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .opacity(isHovering ? 1 : 0)
+            .animation(.easeInOut(duration: 0.15), value: isHovering)
+
+            Button(action: {
+                withAnimation(.easeInOut(duration: 0.3)) { showLeaderboard = true }
+            }) {
+                Image(systemName: "chart.bar.fill")
+                    .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(.white.opacity(0.5))
                     .frame(width: 36, height: 36)
                     .contentShape(Rectangle())
@@ -136,7 +156,7 @@ struct FloatingTimerView: View {
     private var mainContent: some View {
         VStack(spacing: 10) {
             Text(modeLabel)
-                .font(.system(size: 15, weight: .light, design: .rounded))
+                .font(.system(size: 18, weight: .light, design: .rounded))
                 .foregroundStyle(.white.opacity(0.5))
 
             Text(timerVM.formattedTime)
@@ -277,6 +297,119 @@ struct FloatingTimerView: View {
             Spacer()
         }
         .padding(.vertical, 4)
+    }
+
+    // MARK: - Leaderboard view
+
+    private var leaderboardView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // Header
+            HStack {
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.3)) { showLeaderboard = false }
+                }) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.6))
+                        .frame(width: 36, height: 36)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+
+                Spacer()
+
+                Text("Leaderboard")
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.85))
+
+                Spacer()
+                Color.clear.frame(width: 36, height: 36)
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 12)
+
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 20) {
+                    // Best sessions
+                    leaderboardSection(
+                        title: "Best Sessions",
+                        sessions: timerVM.topSessions,
+                        showRank: true
+                    )
+
+                    // Recent sessions
+                    leaderboardSection(
+                        title: "Recent",
+                        sessions: timerVM.recentSessions,
+                        showRank: false
+                    )
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 16)
+                .padding(.bottom, 12)
+            }
+        }
+        .padding(.vertical, 4)
+    }
+
+    private func leaderboardSection(title: String, sessions: [FocusSession], showRank: Bool) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title)
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(.white.opacity(0.85))
+
+            if sessions.isEmpty {
+                Text("No sessions yet")
+                    .font(.system(size: 12, weight: .light, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.3))
+                    .padding(.top, 2)
+            } else {
+                ForEach(Array(sessions.enumerated()), id: \.offset) { index, session in
+                    HStack(spacing: 10) {
+                        if showRank {
+                            Text("\(index + 1)")
+                                .font(.system(size: 12, weight: .medium, design: .rounded))
+                                .foregroundStyle(.white.opacity(0.3))
+                                .frame(width: 16, alignment: .trailing)
+                        }
+                        Text(formatDuration(session.duration))
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
+                            .foregroundStyle(.white.opacity(0.9))
+                            .monospacedDigit()
+                        Spacer()
+                        Text(formatDate(session.date))
+                            .font(.system(size: 12, weight: .light, design: .rounded))
+                            .foregroundStyle(.white.opacity(0.4))
+                    }
+                }
+            }
+        }
+    }
+
+    private func formatDuration(_ seconds: Int) -> String {
+        if seconds >= 3600 {
+            let h = seconds / 3600
+            let m = (seconds % 3600) / 60
+            let s = seconds % 60
+            return String(format: "%d:%02d:%02d", h, m, s)
+        } else {
+            return String(format: "%02d:%02d", seconds / 60, seconds % 60)
+        }
+    }
+
+    private func formatDate(_ date: Date) -> String {
+        let cal = Calendar.current
+        if cal.isDateInToday(date) { return "Today" }
+        if cal.isDateInYesterday(date) { return "Yesterday" }
+        let days = cal.dateComponents([.day], from: date, to: Date()).day ?? 0
+        if days < 7 {
+            let fmt = DateFormatter()
+            fmt.dateFormat = "EEE"
+            return fmt.string(from: date)
+        }
+        let fmt = DateFormatter()
+        fmt.dateFormat = "d MMM"
+        return fmt.string(from: date)
     }
 
     // MARK: - Action button

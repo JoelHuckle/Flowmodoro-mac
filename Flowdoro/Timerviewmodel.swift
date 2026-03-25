@@ -3,16 +3,22 @@ import Observation
 import Combine
 import UserNotifications
 
+struct FocusSession: Codable {
+    let duration: Int
+    let date: Date
+}
+
 @Observable
 class TimerViewModel {
     private var timerCancellable: AnyCancellable?
-    
+
     var state = TimerState.idle
     var isPaused: Bool = false
     var elapsedSeconds: Int = 0
     var breakSecondsRemaining: Int = 0
     var breakRatio: Double = 5.0
-    
+    private(set) var sessions: [FocusSession] = []
+
     var formattedTime: String {
         switch state {
         case .idle: return "00:00"
@@ -20,7 +26,19 @@ class TimerViewModel {
         case .onBreak: return String(format: "%02d:%02d", breakSecondsRemaining / 60, breakSecondsRemaining % 60)
         }
     }
-    
+
+    var topSessions: [FocusSession] {
+        sessions.sorted { $0.duration > $1.duration }.prefix(10).map { $0 }
+    }
+
+    var recentSessions: [FocusSession] {
+        sessions.sorted { $0.date > $1.date }.prefix(5).map { $0 }
+    }
+
+    init() {
+        loadSessions()
+    }
+
     func togglePause() {
         guard state != .idle else { return }
         if isPaused {
@@ -38,23 +56,24 @@ class TimerViewModel {
         elapsedSeconds = 0
         startTimer()
     }
-    
+
     func stopFocusing() {
+        recordSession()
         let breakSeconds = max(Int(Double(elapsedSeconds) / breakRatio), 60)
         breakSecondsRemaining = breakSeconds
         state = .onBreak(breakDuration: TimeInterval(breakSeconds))
         sendBreakNotification(breakSeconds: breakSeconds)
     }
-    
+
     func endBreak() {
         isPaused = false
         stopTimer()
         breakSecondsRemaining = 0
         startFocusing()
     }
-    
+
     // MARK: - Timer
-    
+
     private func startTimer() {
         timerCancellable = Timer.publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
@@ -63,12 +82,12 @@ class TimerViewModel {
                 self.tick()
             }
     }
-    
+
     private func stopTimer() {
         timerCancellable?.cancel()
         timerCancellable = nil
     }
-    
+
     private func tick() {
         switch state {
         case .idle:
@@ -84,29 +103,47 @@ class TimerViewModel {
             }
         }
     }
-    
+
+    // MARK: - Sessions
+
+    private func recordSession() {
+        guard elapsedSeconds >= 60 else { return }
+        sessions.append(FocusSession(duration: elapsedSeconds, date: Date()))
+        saveSessions()
+    }
+
+    private func saveSessions() {
+        guard let data = try? JSONEncoder().encode(sessions) else { return }
+        UserDefaults.standard.set(data, forKey: "focusSessions")
+    }
+
+    private func loadSessions() {
+        guard let data = UserDefaults.standard.data(forKey: "focusSessions"),
+              let decoded = try? JSONDecoder().decode([FocusSession].self, from: data)
+        else { return }
+        sessions = decoded
+    }
+
     // MARK: - Notifications
-    
+
     func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
     }
-    
+
     private func sendBreakNotification(breakSeconds: Int) {
         let content = UNMutableNotificationContent()
         content.title = "Time for a break"
         content.body = "You focused for \(elapsedSeconds / 60) min. Take a \(breakSeconds / 60) min break."
         content.sound = .default
-        
         let request = UNNotificationRequest(identifier: "break-start", content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request)
     }
-    
+
     private func sendBreakOverNotification() {
         let content = UNMutableNotificationContent()
         content.title = "Break's over"
         content.body = "Ready to focus again?"
         content.sound = .default
-        
         let request = UNNotificationRequest(identifier: "break-end", content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request)
     }
