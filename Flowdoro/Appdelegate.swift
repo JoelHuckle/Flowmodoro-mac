@@ -6,7 +6,7 @@ import Combine
 // MARK: - Status bar timer view
 
 private func makeStatusImage(for time: String) -> NSImage {
-    let font = NSFont.monospacedDigitSystemFont(ofSize: 10, weight: .medium)
+    let font = NSFont.monospacedDigitSystemFont(ofSize: 12, weight: .medium)
     let attrs: [NSAttributedString.Key: Any] = [
         .font: font,
         .foregroundColor: NSColor.white

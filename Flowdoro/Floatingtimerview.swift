@@ -10,10 +10,19 @@ struct FloatingTimerView: View {
     @State private var rippleOpacity: Double = 0
     @State private var immediateIconName: String? = nil
     @State private var arcOpacity: Double = 1.0
+    @State private var showSettings = false
+    @State private var customRatioText = ""
+    @State private var ratioInputInvalid = false
+    @State private var invalidShakeOffset: CGFloat = 0
+
+    private let presetRatios = [3.0, 4.0, 5.0, 6.0, 8.0]
+    private var isCustomRatio: Bool {
+        !presetRatios.contains(timerVM.breakRatio)
+    }
 
     private var backgroundColor: Color {
         if case .onBreak = timerVM.state {
-            return Color(red: 0.14, green: 0.10, blue: 0.22)
+            return Color(red: 0.07, green: 0.20, blue: 0.38)
         }
         return Color(red: 0.10, green: 0.11, blue: 0.13)
     }
@@ -32,15 +41,29 @@ struct FloatingTimerView: View {
                 .fill(backgroundColor)
                 .animation(.easeInOut(duration: 0.5), value: stateKey)
 
-            VStack(spacing: 0) {
-                topBar
-                Spacer()
-                mainContent
-                Spacer()
-                actionButton
-                    .padding(.bottom, 28)
+            if showSettings {
+                settingsView
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing).combined(with: .opacity),
+                        removal: .move(edge: .trailing).combined(with: .opacity)
+                    ))
+            } else {
+                VStack(spacing: 0) {
+                    topBar
+                    Spacer()
+                    mainContent
+                    Spacer()
+                    actionButton
+                        .padding(.bottom, 28)
+                }
+                .transition(.asymmetric(
+                    insertion: .move(edge: .leading).combined(with: .opacity),
+                    removal: .move(edge: .leading).combined(with: .opacity)
+                ))
+
             }
         }
+        .animation(.easeInOut(duration: 0.3), value: showSettings)
         .onHover { hovering in
             withAnimation(.easeInOut(duration: 0.15)) {
                 isHovering = hovering
@@ -56,7 +79,8 @@ struct FloatingTimerView: View {
                 Image(systemName: "xmark")
                     .font(.system(size: 11, weight: .bold))
                     .foregroundStyle(.white.opacity(0.7))
-                    .frame(width: 22, height: 22)
+                    .frame(width: 36, height: 36)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .opacity(isHovering ? 1 : 0)
@@ -64,23 +88,47 @@ struct FloatingTimerView: View {
 
             Spacer()
 
-            if timerVM.state != .idle {
-                Button(action: { timerVM.togglePause() }) {
-                    Image(systemName: timerVM.isPaused ? "play.fill" : "pause.fill")
-                        .font(.system(size: 20))
-                        .foregroundStyle(.white.opacity(0.7))
-                        .frame(width: 22, height: 22)
-                        .contentTransition(.symbolEffect(.replace.downUp))
-                        .animation(.easeInOut(duration: 0.2), value: timerVM.isPaused)
-                }
-                .buttonStyle(.plain)
-                .transition(.opacity.combined(with: .scale(scale: 0.8)))
+            Button(action: {
+                customRatioText = ""
+                withAnimation(.easeInOut(duration: 0.3)) { showSettings = true }
+            }) {
+                Image(systemName: "ellipsis")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(.white.opacity(0.5))
+                    .frame(width: 36, height: 36)
+                    .contentShape(Rectangle())
             }
+            .buttonStyle(.plain)
+            .opacity(isHovering ? 1 : 0)
+            .animation(.easeInOut(duration: 0.15), value: isHovering)
+
+            Button(action: {
+                if timerVM.state == .idle {
+                    timerVM.startFocusing()
+                } else {
+                    timerVM.togglePause()
+                }
+            }) {
+                Image(systemName: topBarIconName)
+                    .font(.system(size: 20))
+                    .foregroundStyle(.white.opacity(0.7))
+                    .frame(width: 36, height: 36)
+                    .contentShape(Rectangle())
+                    .contentTransition(.symbolEffect(.replace.downUp))
+                    .animation(.easeInOut(duration: 0.2), value: topBarIconName)
+            }
+            .buttonStyle(.plain)
         }
         .padding(.horizontal, 16)
         .padding(.top, 14)
         .frame(height: 44)
-        .animation(.easeInOut(duration: 0.2), value: timerVM.state != .idle)
+    }
+
+    private var topBarIconName: String {
+        switch timerVM.state {
+        case .idle: return "play.fill"
+        case .focusing, .onBreak: return timerVM.isPaused ? "play.fill" : "pause.fill"
+        }
     }
 
     // MARK: - Main content
@@ -97,6 +145,138 @@ struct FloatingTimerView: View {
                 .monospacedDigit()
                 .animation(nil, value: timerVM.formattedTime)
         }
+    }
+
+    // MARK: - Settings view
+
+    private var settingsView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // Header
+            HStack {
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.3)) { showSettings = false }
+                }) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.6))
+                        .frame(width: 36, height: 36)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+
+                Spacer()
+
+                Text("Settings")
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.85))
+
+                Spacer()
+                Color.clear.frame(width: 22, height: 22)
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 12)
+
+            // Break ratio
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Break ratio")
+                        .font(.system(size: 16, weight: .medium, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.85))
+                    Text("Minutes of break per minutes of focus")
+                        .font(.system(size: 12, weight: .light, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.4))
+                }
+
+                // Presets + custom chip
+                HStack(spacing: 7) {
+                    ForEach(presetRatios, id: \.self) { ratio in
+                        let selected = timerVM.breakRatio == ratio
+                        Button("1:\(Int(ratio))") {
+                            timerVM.breakRatio = ratio
+                            customRatioText = ""
+                        }
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(.white.opacity(selected ? 1.0 : 0.45))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 7)
+                                .fill(Color.white.opacity(selected ? 0.18 : 0.07))
+                        )
+                        .buttonStyle(.plain)
+                        .animation(.easeInOut(duration: 0.15), value: selected)
+                    }
+
+                    if isCustomRatio {
+                        let label = timerVM.breakRatio.truncatingRemainder(dividingBy: 1) == 0
+                            ? "1:\(Int(timerVM.breakRatio))"
+                            : "1:\(String(format: "%.1f", timerVM.breakRatio))"
+                        Text(label)
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(
+                                RoundedRectangle(cornerRadius: 7)
+                                    .fill(Color.white.opacity(0.18))
+                            )
+                            .transition(.scale(scale: 0.8).combined(with: .opacity))
+                    }
+                }
+                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCustomRatio)
+
+                // Custom input
+                HStack(spacing: 8) {
+                    Text("Custom  1:")
+                        .font(.system(size: 13, weight: .light, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.45))
+                    TextField("e.g. 7", text: $customRatioText)
+                        .font(.system(size: 13, design: .rounded))
+                        .foregroundStyle(ratioInputInvalid ? Color.red : .white)
+                        .frame(width: 52)
+                        .textFieldStyle(.plain)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 7)
+                                .fill(ratioInputInvalid
+                                      ? Color.red.opacity(0.18)
+                                      : Color.white.opacity(0.08))
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 7)
+                                .stroke(Color.red.opacity(ratioInputInvalid ? 0.7 : 0), lineWidth: 1)
+                        )
+                        .offset(x: invalidShakeOffset)
+                        .onSubmit {
+                            if let value = Double(customRatioText), value > 0 {
+                                timerVM.breakRatio = value
+                                ratioInputInvalid = false
+                            } else {
+                                ratioInputInvalid = true
+                                withAnimation(.interpolatingSpring(stiffness: 600, damping: 10)) {
+                                    invalidShakeOffset = -6
+                                }
+                                withAnimation(.interpolatingSpring(stiffness: 600, damping: 10).delay(0.05)) {
+                                    invalidShakeOffset = 6
+                                }
+                                withAnimation(.interpolatingSpring(stiffness: 600, damping: 10).delay(0.1)) {
+                                    invalidShakeOffset = 0
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    withAnimation { ratioInputInvalid = false }
+                                    customRatioText = ""
+                                }
+                            }
+                        }
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 16)
+
+            Spacer()
+        }
+        .padding(.vertical, 4)
     }
 
     // MARK: - Action button
@@ -175,17 +355,14 @@ struct FloatingTimerView: View {
         animatedBreakProgress = total > 0 ? (total - remaining) / total : 0
         skipAnimating = true
 
-        // Phase 1: fast-forward arc to full
         withAnimation(.easeIn(duration: 0.4)) {
             animatedBreakProgress = 1.0
         }
-        // Phase 2: fade arc out
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             withAnimation(.easeOut(duration: 0.25)) {
                 arcOpacity = 0
             }
         }
-        // Phase 3: state change — arc already invisible
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
             immediateIconName = nil
             skipAnimating = false
