@@ -1,6 +1,6 @@
 import Foundation
 
-enum TimerState {
+enum TimerState: Equatable {
     case idle
     case focusing
     case onBreak(breakDuration: TimeInterval)

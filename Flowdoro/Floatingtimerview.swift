@@ -53,24 +53,34 @@ struct FloatingTimerView: View {
     private var topBar: some View {
         HStack {
             Button(action: onClose) {
-                ZStack {
-                    Circle()
-                        .fill(Color.white.opacity(0.12))
-                        .frame(width: 22, height: 22)
-                    Image(systemName: "xmark")
-                        .font(.system(size: 9, weight: .bold))
-                        .foregroundStyle(.white.opacity(0.7))
-                }
+                Image(systemName: "xmark")
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.7))
+                    .frame(width: 22, height: 22)
             }
             .buttonStyle(.plain)
             .opacity(isHovering ? 1 : 0)
             .animation(.easeInOut(duration: 0.15), value: isHovering)
 
             Spacer()
+
+            if timerVM.state != .idle {
+                Button(action: { timerVM.togglePause() }) {
+                    Image(systemName: timerVM.isPaused ? "play.fill" : "pause.fill")
+                        .font(.system(size: 20))
+                        .foregroundStyle(.white.opacity(0.7))
+                        .frame(width: 22, height: 22)
+                        .contentTransition(.symbolEffect(.replace.downUp))
+                        .animation(.easeInOut(duration: 0.2), value: timerVM.isPaused)
+                }
+                .buttonStyle(.plain)
+                .transition(.opacity.combined(with: .scale(scale: 0.8)))
+            }
         }
         .padding(.horizontal, 16)
         .padding(.top, 14)
         .frame(height: 44)
+        .animation(.easeInOut(duration: 0.2), value: timerVM.state != .idle)
     }
 
     // MARK: - Main content

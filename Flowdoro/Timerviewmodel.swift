@@ -8,6 +8,7 @@ class TimerViewModel {
     private var timerCancellable: AnyCancellable?
     
     var state = TimerState.idle
+    var isPaused: Bool = false
     var elapsedSeconds: Int = 0
     var breakSecondsRemaining: Int = 0
     var breakRatio: Double = 5.0
@@ -20,7 +21,19 @@ class TimerViewModel {
         }
     }
     
+    func togglePause() {
+        guard state != .idle else { return }
+        if isPaused {
+            isPaused = false
+            startTimer()
+        } else {
+            isPaused = true
+            stopTimer()
+        }
+    }
+
     func startFocusing() {
+        isPaused = false
         state = .focusing
         elapsedSeconds = 0
         startTimer()
@@ -34,6 +47,7 @@ class TimerViewModel {
     }
     
     func endBreak() {
+        isPaused = false
         stopTimer()
         breakSecondsRemaining = 0
         startFocusing()
