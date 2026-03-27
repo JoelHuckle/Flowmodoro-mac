@@ -2,6 +2,7 @@ import Foundation
 import Observation
 import Combine
 import UserNotifications
+import AppKit
 
 struct FocusSession: Codable {
     let duration: Int
@@ -140,10 +141,11 @@ class TimerViewModel {
     }
 
     private func sendBreakOverNotification() {
+        NSSound(named: "Pop")?.play()
+
         let content = UNMutableNotificationContent()
         content.title = "Break's over"
         content.body = "Ready to focus again?"
-        content.sound = .default
         let request = UNNotificationRequest(identifier: "break-end", content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request)
     }

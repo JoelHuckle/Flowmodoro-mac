@@ -2,6 +2,7 @@ import AppKit
 import SwiftUI
 import Observation
 import Combine
+import UserNotifications
 
 // MARK: - Status bar timer view
 
@@ -41,7 +42,7 @@ private func makeStatusImage(for time: String) -> NSImage {
 
 // MARK: - App delegate
 
-class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
+class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject, UNUserNotificationCenterDelegate {
 
     var timerVM = TimerViewModel()
     private var floatingPanel: FloatingPanel?
@@ -49,10 +50,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
+        UNUserNotificationCenter.current().delegate = self
         setupPanel()
         setupStatusItem()
         startObserving()
         timerVM.requestNotificationPermission()
+    }
+
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.banner, .sound])
     }
 
     // MARK: - Panel
