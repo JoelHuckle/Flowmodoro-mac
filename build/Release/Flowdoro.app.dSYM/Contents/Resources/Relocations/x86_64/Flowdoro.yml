@@ -1,0 +1,5 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     '/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Release/Flowdoro.app/Contents/MacOS/Flowdoro'
+relocations:     []
+...

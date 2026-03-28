@@ -15,6 +15,7 @@ struct FloatingTimerView: View {
     @State private var customRatioText = ""
     @State private var ratioInputInvalid = false
     @State private var invalidShakeOffset: CGFloat = 0
+    @State private var barsVisible = false
 
     private let presetRatios = [3.0, 4.0, 5.0, 6.0, 8.0]
     private var isCustomRatio: Bool {
@@ -303,7 +304,6 @@ struct FloatingTimerView: View {
 
     private var leaderboardView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            // Header
             HStack {
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.3)) { showLeaderboard = false }
@@ -329,61 +329,195 @@ struct FloatingTimerView: View {
             .padding(.top, 12)
 
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 20) {
-                    // Best sessions
-                    leaderboardSection(
-                        title: "Best Sessions",
-                        sessions: timerVM.topSessions,
-                        showRank: true
-                    )
-
-                    // Recent sessions
-                    leaderboardSection(
-                        title: "Recent",
-                        sessions: timerVM.recentSessions,
-                        showRank: false
-                    )
+                VStack(alignment: .leading, spacing: 16) {
+                    statsStripView
+                    bestSessionsSection
+                    recentSessionsSection
                 }
                 .padding(.horizontal, 20)
-                .padding(.top, 16)
+                .padding(.top, 12)
                 .padding(.bottom, 12)
             }
         }
         .padding(.vertical, 4)
+        .onAppear {
+            barsVisible = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                barsVisible = true
+            }
+        }
+        .onDisappear {
+            barsVisible = false
+        }
     }
 
-    private func leaderboardSection(title: String, sessions: [FocusSession], showRank: Bool) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(title)
-                .font(.system(size: 13, weight: .medium, design: .rounded))
-                .foregroundStyle(.white.opacity(0.85))
+    private var statsStripView: some View {
+        HStack(spacing: 0) {
+            let totalSeconds = timerVM.sessions.reduce(0) { $0 + $1.duration }
+            VStack(spacing: 2) {
+                Text(formatTotalDuration(totalSeconds))
+                    .font(.system(size: 17, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.9))
+                    .monospacedDigit()
+                Text("total focus")
+                    .font(.system(size: 10, weight: .light, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.38))
+            }
+            .frame(maxWidth: .infinity)
+
+            Rectangle()
+                .fill(Color.white.opacity(0.1))
+                .frame(width: 1, height: 30)
+
+            VStack(spacing: 2) {
+                Text("\(timerVM.sessions.count)")
+                    .font(.system(size: 17, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.9))
+                Text("sessions")
+                    .font(.system(size: 10, weight: .light, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.38))
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .padding(.vertical, 10)
+        .background(RoundedRectangle(cornerRadius: 10).fill(Color.white.opacity(0.06)))
+        .opacity(barsVisible ? 1 : 0)
+        .animation(.easeOut(duration: 0.35), value: barsVisible)
+    }
+
+    private var bestSessionsSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("BEST")
+                .font(.system(size: 10, weight: .semibold, design: .rounded))
+                .foregroundStyle(.white.opacity(0.35))
+                .tracking(1.5)
+
+            let sessions = timerVM.topSessions
+            let maxDuration = max(sessions.first?.duration ?? 1, 1)
 
             if sessions.isEmpty {
                 Text("No sessions yet")
                     .font(.system(size: 12, weight: .light, design: .rounded))
                     .foregroundStyle(.white.opacity(0.3))
-                    .padding(.top, 2)
             } else {
                 ForEach(Array(sessions.enumerated()), id: \.offset) { index, session in
-                    HStack(spacing: 10) {
-                        if showRank {
-                            Text("\(index + 1)")
-                                .font(.system(size: 12, weight: .medium, design: .rounded))
-                                .foregroundStyle(.white.opacity(0.3))
-                                .frame(width: 16, alignment: .trailing)
-                        }
-                        Text(formatDuration(session.duration))
-                            .font(.system(size: 13, weight: .medium, design: .rounded))
-                            .foregroundStyle(.white.opacity(0.9))
-                            .monospacedDigit()
-                        Spacer()
-                        Text(formatDate(session.date))
-                            .font(.system(size: 12, weight: .light, design: .rounded))
-                            .foregroundStyle(.white.opacity(0.4))
-                    }
+                    bestSessionRow(index: index, session: session, maxDuration: maxDuration)
                 }
             }
         }
+    }
+
+    private func bestSessionRow(index: Int, session: FocusSession, maxDuration: Int) -> some View {
+        let proportion = Double(session.duration) / Double(maxDuration)
+        let delay = Double(index) * 0.06
+        return GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 7)
+                    .fill(Color.white.opacity(0.05))
+                    .frame(width: geo.size.width, height: 32)
+
+                RoundedRectangle(cornerRadius: 7)
+                    .fill(rankBarColor(index: index))
+                    .frame(
+                        width: barsVisible ? geo.size.width * proportion : 0,
+                        height: 32
+                    )
+                    .animation(
+                        .spring(response: 0.55, dampingFraction: 0.78).delay(delay + 0.1),
+                        value: barsVisible
+                    )
+
+                HStack(spacing: 7) {
+                    rankBadge(index: index)
+                    Text(formatDuration(session.duration))
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(.white.opacity(index == 0 ? 1.0 : 0.82))
+                        .monospacedDigit()
+                    Spacer()
+                    Text(formatDate(session.date))
+                        .font(.system(size: 11, weight: .light, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.42))
+                }
+                .padding(.horizontal, 9)
+            }
+        }
+        .frame(height: 32)
+        .offset(x: barsVisible ? 0 : -16)
+        .opacity(barsVisible ? 1 : 0)
+        .animation(.spring(response: 0.42, dampingFraction: 0.78).delay(delay), value: barsVisible)
+    }
+
+    private func rankBadge(index: Int) -> some View {
+        Text("\(index + 1)")
+            .font(.system(size: 11, weight: .bold, design: .rounded))
+            .foregroundStyle(index < 3 ? rankColor(index: index) : Color.white.opacity(0.28))
+            .frame(width: 16, alignment: .trailing)
+    }
+
+    private func rankColor(index: Int) -> Color {
+        switch index {
+        case 0: return Color(red: 1.0, green: 0.82, blue: 0.28)
+        case 1: return Color(red: 0.78, green: 0.78, blue: 0.82)
+        case 2: return Color(red: 0.82, green: 0.55, blue: 0.30)
+        default: return .white
+        }
+    }
+
+    private func rankBarColor(index: Int) -> Color {
+        switch index {
+        case 0: return Color(red: 1.0, green: 0.82, blue: 0.28).opacity(0.28)
+        case 1: return Color(red: 0.78, green: 0.78, blue: 0.82).opacity(0.20)
+        case 2: return Color(red: 0.82, green: 0.55, blue: 0.30).opacity(0.24)
+        default: return Color.white.opacity(0.09)
+        }
+    }
+
+    private var recentSessionsSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("RECENT")
+                .font(.system(size: 10, weight: .semibold, design: .rounded))
+                .foregroundStyle(.white.opacity(0.35))
+                .tracking(1.5)
+
+            let sessions = timerVM.recentSessions
+
+            if sessions.isEmpty {
+                Text("No sessions yet")
+                    .font(.system(size: 12, weight: .light, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.3))
+            } else {
+                ForEach(Array(sessions.enumerated()), id: \.offset) { index, session in
+                    recentSessionCard(index: index, session: session)
+                }
+            }
+        }
+    }
+
+    private func recentSessionCard(index: Int, session: FocusSession) -> some View {
+        let delay = Double(index) * 0.06 + 0.15
+        return HStack(spacing: 10) {
+            Text(formatDuration(session.duration))
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(.white.opacity(0.85))
+                .monospacedDigit()
+            Spacer()
+            Text(formatDate(session.date))
+                .font(.system(size: 11, weight: .light, design: .rounded))
+                .foregroundStyle(.white.opacity(0.42))
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .background(RoundedRectangle(cornerRadius: 8).fill(Color.white.opacity(0.055)))
+        .offset(x: barsVisible ? 0 : -16)
+        .opacity(barsVisible ? 1 : 0)
+        .animation(.spring(response: 0.42, dampingFraction: 0.78).delay(delay), value: barsVisible)
+    }
+
+    private func formatTotalDuration(_ seconds: Int) -> String {
+        if seconds < 3600 { return "\(seconds / 60)m" }
+        let h = seconds / 3600
+        let m = (seconds % 3600) / 60
+        return m > 0 ? "\(h)h \(m)m" : "\(h)h"
     }
 
     private func formatDuration(_ seconds: Int) -> String {

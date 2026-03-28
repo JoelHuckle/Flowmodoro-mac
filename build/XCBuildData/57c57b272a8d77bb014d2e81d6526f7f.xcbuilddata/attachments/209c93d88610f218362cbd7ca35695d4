@@ -1,0 +1,51 @@
+{
+  "" : {
+    "const-values" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Flowdoro-primary.swiftconstvalues",
+    "dependencies" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Flowdoro-primary.d",
+    "diagnostics" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Flowdoro-primary.dia",
+    "emit-module-dependencies" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Flowdoro-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Flowdoro-primary-emit-module.dia",
+    "pch" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Flowdoro-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Flowdoro-primary.swiftdeps"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/Flowdoro/Appdelegate.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Appdelegate.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Appdelegate.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Appdelegate.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/Flowdoro/Floatingpanel.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Floatingpanel.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Floatingpanel.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Floatingpanel.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/Flowdoro/Floatingtimerview.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Floatingtimerview.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Floatingtimerview.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Floatingtimerview.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/Flowdoro/Flowdoroapp.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Flowdoroapp.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Flowdoroapp.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Flowdoroapp.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/Flowdoro/Shared/FocusSession.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/FocusSession.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/FocusSession.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/FocusSession.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/Flowdoro/Timerstate.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Timerstate.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Timerstate.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Timerstate.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/Flowdoro/Timerviewmodel.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Timerviewmodel.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Timerviewmodel.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/Timerviewmodel.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/Flowdoro.build/Objects-normal/x86_64/GeneratedAssetSymbols.o"
+  }
+}

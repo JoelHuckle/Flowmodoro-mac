@@ -1,0 +1,24 @@
+{
+  "source": "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/FlowdoroWidget/FlowdoroWidget.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Flowdoro",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Today's total focused minutes.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 16
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -3,11 +3,7 @@ import Observation
 import Combine
 import UserNotifications
 import AppKit
-
-struct FocusSession: Codable {
-    let duration: Int
-    let date: Date
-}
+import WidgetKit
 
 @Observable
 class TimerViewModel {
@@ -111,15 +107,21 @@ class TimerViewModel {
         guard elapsedSeconds >= 60 else { return }
         sessions.append(FocusSession(duration: elapsedSeconds, date: Date()))
         saveSessions()
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     private func saveSessions() {
         guard let data = try? JSONEncoder().encode(sessions) else { return }
-        UserDefaults.standard.set(data, forKey: "focusSessions")
+        FlowdoroShared.sharedDefaults?.set(data, forKey: FlowdoroShared.sessionsKey)
     }
 
     private func loadSessions() {
-        guard let data = UserDefaults.standard.data(forKey: "focusSessions"),
+        // One-time migration from UserDefaults.standard to App Group suite
+        if let legacyData = UserDefaults.standard.data(forKey: FlowdoroShared.sessionsKey) {
+            FlowdoroShared.sharedDefaults?.set(legacyData, forKey: FlowdoroShared.sessionsKey)
+            UserDefaults.standard.removeObject(forKey: FlowdoroShared.sessionsKey)
+        }
+        guard let data = FlowdoroShared.sharedDefaults?.data(forKey: FlowdoroShared.sessionsKey),
               let decoded = try? JSONDecoder().decode([FocusSession].self, from: data)
         else { return }
         sessions = decoded
@@ -129,6 +131,11 @@ class TimerViewModel {
 
     func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+              print("notification auth status:", settings.authorizationStatus.rawValue)
+              // 0=notDetermined, 1=denied, 2=authorized, 3=provisional, 4=ephemeral
+          }
+
     }
 
     private func sendBreakNotification(breakSeconds: Int) {
@@ -141,12 +148,13 @@ class TimerViewModel {
     }
 
     private func sendBreakOverNotification() {
-        NSSound(named: "Pop")?.play()
-
         let content = UNMutableNotificationContent()
         content.title = "Break's over"
         content.body = "Ready to focus again?"
+        content.sound = .default
         let request = UNNotificationRequest(identifier: "break-end", content: content, trigger: nil)
-        UNUserNotificationCenter.current().add(request)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error { print("break-end notification error:", error) }
+        }
     }
 }

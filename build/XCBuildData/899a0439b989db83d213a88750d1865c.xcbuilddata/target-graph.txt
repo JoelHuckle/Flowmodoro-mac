@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'Flowdoro' in project 'Flowdoro'
+➜ Explicit dependency on target 'FlowdoroWidget' in project 'Flowdoro'
+Target 'FlowdoroWidget' in project 'Flowdoro' (no dependencies)

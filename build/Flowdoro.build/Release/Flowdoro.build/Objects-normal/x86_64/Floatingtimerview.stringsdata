@@ -1,0 +1,128 @@
+{
+  "source": "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/Flowdoro/Floatingtimerview.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Settings",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 190
+        }
+      },
+      {
+        "comment": "",
+        "key": "Break ratio",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 203
+        }
+      },
+      {
+        "comment": "",
+        "key": "Minutes of break per minutes of focus",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 206
+        }
+      },
+      {
+        "comment": "",
+        "key": "1:%lld",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 215
+        }
+      },
+      {
+        "comment": "",
+        "key": "Custom  1:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 251
+        }
+      },
+      {
+        "comment": "",
+        "key": "e.g. 7",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 254
+        }
+      },
+      {
+        "comment": "",
+        "key": "Leaderboard",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 321
+        }
+      },
+      {
+        "comment": "",
+        "key": "total focus",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 362
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 373
+        }
+      },
+      {
+        "comment": "",
+        "key": "sessions",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 376
+        }
+      },
+      {
+        "comment": "",
+        "key": "BEST",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 390
+        }
+      },
+      {
+        "comment": "",
+        "key": "No sessions yet",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 399
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 451
+        }
+      },
+      {
+        "comment": "",
+        "key": "RECENT",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 477
+        }
+      },
+      {
+        "comment": "",
+        "key": "No sessions yet",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 485
+        }
+      }
+    ]
+  },
+  "version": 1
+}

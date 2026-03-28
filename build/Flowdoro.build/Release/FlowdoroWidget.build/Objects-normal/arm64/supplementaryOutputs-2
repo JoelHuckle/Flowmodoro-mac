@@ -1,0 +1,12 @@
+{
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/FlowdoroWidget/FlowdoroWidget.swift" : {
+    "abi-baseline-json" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget.abi.json",
+    "const-values" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-primary.swiftconstvalues",
+    "dependencies" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-primary.d",
+    "diagnostics" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-primary.dia",
+    "objc-header" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-Swift.h",
+    "swiftdoc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget.swiftdoc",
+    "swiftmodule" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget.swiftmodule",
+    "swiftsourceinfo" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget.swiftsourceinfo"
+  }
+}

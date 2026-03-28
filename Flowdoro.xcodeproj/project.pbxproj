@@ -6,10 +6,34 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		AA000013AABB000000013001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E14A3092F6F22D90076F169 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA000003AABB000000003001;
+			remoteInfo = FlowdoroWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AA000010AABB000000010001 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		5E14A3112F6F22D90076F169 /* Flowdoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowdoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E14A32A2F6F2A320076F169 /* Flowdoro.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Flowdoro.xcodeproj; sourceTree = "<group>"; };
 		5E1FFDBA2F703AF200624F7C /* Flowdoro.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Flowdoro.xcodeproj; sourceTree = "<group>"; };
+		AA000001AABB000000001001 /* FlowdoroWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FlowdoroWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -18,10 +42,22 @@
 			path = Flowdoro;
 			sourceTree = "<group>";
 		};
+		AA000002AABB000000002001 /* FlowdoroWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FlowdoroWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5E14A30E2F6F22D90076F169 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA000005AABB000000005001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -35,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				5E14A3132F6F22D90076F169 /* Flowdoro */,
+				AA000002AABB000000002001 /* FlowdoroWidget */,
 				5E14A3122F6F22D90076F169 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				5E14A3112F6F22D90076F169 /* Flowdoro.app */,
+				AA000001AABB000000001001 /* FlowdoroWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -71,10 +109,12 @@
 				5E14A30D2F6F22D90076F169 /* Sources */,
 				5E14A30E2F6F22D90076F169 /* Frameworks */,
 				5E14A30F2F6F22D90076F169 /* Resources */,
+				AA000010AABB000000010001 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AA000012AABB000000012001 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				5E14A3132F6F22D90076F169 /* Flowdoro */,
@@ -85,6 +125,28 @@
 			productName = Flowdoro;
 			productReference = 5E14A3112F6F22D90076F169 /* Flowdoro.app */;
 			productType = "com.apple.product-type.application";
+		};
+		AA000003AABB000000003001 /* FlowdoroWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA000009AABB000000009001 /* Build configuration list for PBXNativeTarget "FlowdoroWidget" */;
+			buildPhases = (
+				AA000004AABB000000004001 /* Sources */,
+				AA000005AABB000000005001 /* Frameworks */,
+				AA000006AABB000000006001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AA000002AABB000000002001 /* FlowdoroWidget */,
+			);
+			name = FlowdoroWidget;
+			packageProductDependencies = (
+			);
+			productName = FlowdoroWidget;
+			productReference = AA000001AABB000000001001 /* FlowdoroWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -99,6 +161,9 @@
 					5E14A3102F6F22D90076F169 = {
 						CreatedOnToolsVersion = 26.3;
 						LastSwiftMigration = 2630;
+					};
+					AA000003AABB000000003001 = {
+						CreatedOnToolsVersion = 26.3;
 					};
 				};
 			};
@@ -127,12 +192,20 @@
 			projectRoot = "";
 			targets = (
 				5E14A3102F6F22D90076F169 /* Flowdoro */,
+				AA000003AABB000000003001 /* FlowdoroWidget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5E14A30F2F6F22D90076F169 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA000006AABB000000006001 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -149,7 +222,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA000004AABB000000004001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA000012AABB000000012001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA000003AABB000000003001 /* FlowdoroWidget */;
+			targetProxy = AA000013AABB000000013001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5E14A31A2F6F22DB0076F169 /* Debug */ = {
@@ -276,9 +364,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Flowdoro/Flowdoro.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -292,6 +384,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JoelHuckle.Flowdoro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -310,9 +403,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Flowdoro/Flowdoro.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -326,12 +423,75 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JoelHuckle.Flowdoro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		AA000007AABB000000007001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FlowdoroWidget/FlowdoroWidget.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				INFOPLIST_FILE = "FlowdoroWidget-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JoelHuckle.Flowdoro.FlowdoroWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AA000008AABB000000008001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FlowdoroWidget/FlowdoroWidget.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				INFOPLIST_FILE = "FlowdoroWidget-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JoelHuckle.Flowdoro.FlowdoroWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -354,6 +514,15 @@
 			buildConfigurations = (
 				5E14A31D2F6F22DB0076F169 /* Debug */,
 				5E14A31E2F6F22DB0076F169 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA000009AABB000000009001 /* Build configuration list for PBXNativeTarget "FlowdoroWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000007AABB000000007001 /* Debug */,
+				AA000008AABB000000008001 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,0 +1,36 @@
+{
+  "" : {
+    "const-values" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-primary.swiftconstvalues",
+    "dependencies" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-primary.d",
+    "diagnostics" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-primary.dia",
+    "emit-module-dependencies" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-primary-emit-module.dia",
+    "pch" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget-primary.swiftdeps"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/FlowdoroWidget/FlowdoroWidget.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidget.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/FlowdoroWidget/FlowdoroWidgetBundle.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidgetBundle.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidgetBundle.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidgetBundle.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/FlowdoroWidget/FlowdoroWidgetEntryView.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidgetEntryView.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidgetEntryView.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidgetEntryView.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/FlowdoroWidget/FlowdoroWidgetProvider.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidgetProvider.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidgetProvider.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FlowdoroWidgetProvider.o"
+  },
+  "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/FlowdoroWidget/FocusSession.swift" : {
+    "index-unit-output-path" : "/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FocusSession.o",
+    "llvm-bc" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FocusSession.bc",
+    "object" : "/Users/joelhuckle/Documents/dev/flowdoro/Flowdoro/build/Flowdoro.build/Release/FlowdoroWidget.build/Objects-normal/arm64/FocusSession.o"
+  }
+}
